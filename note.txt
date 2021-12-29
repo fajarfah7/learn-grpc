@@ -1,0 +1,16 @@
+unary
+server
+1). prepare listener -> lis, err := net.Listen("tcp", "0.0.0.0:50051")
+2). set the struct which implements methods from interface Name[ServiceServer] (can be found on pb.go)
+get request data:
+    if the message(from proto) is "type" example Calculator calculator = 1
+    param1 := request.Get[Type]().GetParam_1()
+    param2 := request.Get[Type]().GetParam_2()
+
+    if the message is not type
+    param1 := request.GetParam1()
+    param2 := request.GetParam2()
+
+protoc greet/greetpb/greet.proto --go_out=plugins=grpc:.
+protoc calculator/pb/calculator.proto --go_out=plugins=grpc:.
+protoc blog/domain/blog.proto --go_out=plugins=grpc:.

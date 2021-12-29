@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package calculator;
+option go_package = "./calculator/pb";
+
+message Calculator {
+    int32 number_1 = 1;
+    int32 number_2 = 2;
+}
+
+message CalculatorRequest {
+    Calculator calculator = 1;
+}
+
+message CalculatorResponse {
+    int32 result = 1;
+}
+
+message PrimeNumberDecompositionRequest {
+    int64 number = 1;
+}
+
+message PrimeNumberDecompositionResponse {
+    int64 prime_factor = 1;
+}
+
+message PrintAverageRequest {
+    int64 number = 1;
+}
+
+message PrintAverageResponse {
+    double result = 1;
+}
+
+message FindMaximumRequest {
+    int32 number = 1;
+}
+
+message FindMaximumResponse {
+    int32 maximum = 1;
+}
+
+message SquareRootRequest {
+    int32 number = 1;
+}
+
+message SquareRootResponse {
+    double number_root = 1;
+}
+
+service CalculatorService {
+    // unary
+    rpc Calculate(CalculatorRequest) returns (CalculatorResponse) {};
+
+    // server stream
+    rpc PrimeNumberDecomposition(PrimeNumberDecompositionRequest) returns (stream PrimeNumberDecompositionResponse) {};
+
+    // client stream
+    rpc PrintAverage(stream PrintAverageRequest) returns (PrintAverageResponse) {};
+
+    // bi-direction stream
+    rpc FindMaximum (stream FindMaximumRequest) returns (stream FindMaximumResponse);
+
+    // error handling
+    // this rpc will throw exception INVALID_ARGUMENT
+    rpc SquareRoot (SquareRootRequest) returns (SquareRootResponse) {};
+}
